@@ -1,6 +1,48 @@
 version: "2.4"
 
 services:
+  mvn-coupon:
+    build:
+      context: .
+      dockerfile: ./couponservice/docker/build/Dockerfile
+    container_name: mvn-coupon
+    platform: linux
+    isolation: default
+    mem_limit: 2G
+    mem_reservation: 2G
+    environment:
+      - TZ=America/Chicago
+      - LC_ALL=en_US
+      - JAVA_OPTS=-Xmx2g -Xms2g
+      - MAVEN_OPTS=-Xmx2g -Xms2g
+    volumes:
+      - .m2:/root/.m2
+      - ./couponservice:/repo
+    working_dir: /repo
+    entrypoint: mvn -B
+    command: clean install
+
+  mvn-product:
+    build:
+      context: .
+      dockerfile: ./productservice/docker/maven/Dockerfile
+    container_name: mvn-product
+    platform: linux
+    isolation: default
+    mem_limit: 2G
+    mem_reservation: 2G
+    environment:
+      - TZ=America/Chicago
+      - LC_ALL=en_US
+      - JAVA_OPTS=-Xmx2g -Xms2g
+      - MAVEN_OPTS=-Xmx2g -Xms2g
+    volumes:
+      - .m2:/root/.m2
+      - ./productservice:/repo
+    working_dir: /repo
+    entrypoint: mvn -B
+    command: clean install
+
   web-db:
     image: mysql:5.6
     container_name: web-db
@@ -9,7 +51,7 @@ services:
     ports:
       - "3010:3010"
     environment:
-      - MYSQL_DATABASE=mydb
+      - MYSQL_DATABASE=sample
       - MYSQL_USER=mysql
       - MYSQL_PASSWORD=supersecret
       - MYSQL_ROOT_PASSWORD=supersecret
@@ -20,6 +62,7 @@ services:
           test: "/etc/init.d/mysql status -P3310"
           interval: 2s
           retries: 10
+
   coupon-app:
     build: 
       context: .
@@ -33,21 +76,11 @@ services:
       - "8090:8090"
     depends_on:
       - web-db
-      - coupon-build
 
-  coupon-build:
-    build: 
-      context: .
-      dockerfile: ./couponservice/docker/build/Dockerfile
-    environment:
-      - TZ=America/Chicago
-    container_name: coupon-build   
-    volumes:
-      - ./couponservice/target:/couponservice/target
   product-app:
     build: 
       context: .
-      dockerfile: ./productservice/Dockerfile
+      dockerfile: ./productservice/docker/service/Dockerfile
     container_name: product-app
     mem_limit: 1G
     mem_reservation: 1G
@@ -56,4 +89,3 @@ services:
     depends_on:
       - web-db
       - coupon-app
-      
