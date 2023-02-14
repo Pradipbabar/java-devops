@@ -1,0 +1,27 @@
+name: Build and store JAR
+
+on:
+  push:
+    branches: [ git-action ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+
+    - name: Build with Maven
+      run: mvn -f couponservice/pom.xml clean install -DskipTests 
+
+    - name: Store JAR
+      uses: actions/upload-artifact@v2
+      with:
+        name: myapp
+        path: target/couponservice-0.0.1.jar
