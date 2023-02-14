@@ -24,4 +24,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: myapp
-        path: productservice/target/couponservice-0.0.1-SNAPSHOT.jar
+        path: productservice/target/productservice-0.0.1-SNAPSHOT.jar
