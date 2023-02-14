@@ -4,7 +4,7 @@ services:
   mvn-coupon:
     build:
       context: .
-      dockerfile: ./couponservice/docker/build/Dockerfile
+      dockerfile: ./couponservice/docker/maven/Dockerfile
     container_name: mvn-coupon
     platform: linux
     isolation: default

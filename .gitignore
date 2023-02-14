@@ -24,7 +24,12 @@ hs_err_pid*
 /.metadata/
 
 /target/
-**/datadir/*
+
+.m2/
+
+# DataDir Volumes causing permissions issues
+docker/mysql/datadir/*
+!docker/mysql/datadir/test.txt
 
 # Flight Service Project
 
