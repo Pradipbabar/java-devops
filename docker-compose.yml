@@ -1,47 +1,47 @@
 version: "2.4"
 
 services:
-  mvn-coupon:
-    build:
-      context: .
-      dockerfile: ./couponservice/docker/maven/Dockerfile
-    container_name: mvn-coupon
-    platform: linux
-    isolation: default
-    mem_limit: 2G
-    mem_reservation: 2G
-    environment:
-      - TZ=America/Chicago
-      - LC_ALL=en_US
-      - JAVA_OPTS=-Xmx2g -Xms2g
-      - MAVEN_OPTS=-Xmx2g -Xms2g
-    volumes:
-      - .m2:/root/.m2
-      - ./couponservice:/repo
-    working_dir: /repo
-    entrypoint: mvn -B
-    command: clean install -DskipTests
+#   mvn-coupon:
+#     build:
+#       context: .
+#       dockerfile: ./couponservice/docker/maven/Dockerfile
+#     container_name: mvn-coupon
+#     platform: linux
+#     isolation: default
+#     mem_limit: 2G
+#     mem_reservation: 2G
+#     environment:
+#       - TZ=America/Chicago
+#       - LC_ALL=en_US
+#       - JAVA_OPTS=-Xmx2g -Xms2g
+#       - MAVEN_OPTS=-Xmx2g -Xms2g
+#     volumes:
+#       - .m2:/root/.m2
+#       - ./couponservice:/repo
+#     working_dir: /repo
+#     entrypoint: mvn -B
+#     command: clean install -DskipTests
 
-  mvn-product:
-    build:
-      context: .
-      dockerfile: ./productservice/docker/maven/Dockerfile
-    container_name: mvn-product
-    platform: linux
-    isolation: default
-    mem_limit: 2G
-    mem_reservation: 2G
-    environment:
-      - TZ=America/Chicago
-      - LC_ALL=en_US
-      - JAVA_OPTS=-Xmx2g -Xms2g
-      - MAVEN_OPTS=-Xmx2g -Xms2g
-    volumes:
-      - .m2:/root/.m2
-      - ./productservice:/repo
-    working_dir: /repo
-    entrypoint: mvn -B
-    command: clean install -DskipTests
+#   mvn-product:
+#     build:
+#       context: .
+#       dockerfile: ./productservice/docker/maven/Dockerfile
+#     container_name: mvn-product
+#     platform: linux
+#     isolation: default
+#     mem_limit: 2G
+#     mem_reservation: 2G
+#     environment:
+#       - TZ=America/Chicago
+#       - LC_ALL=en_US
+#       - JAVA_OPTS=-Xmx2g -Xms2g
+#       - MAVEN_OPTS=-Xmx2g -Xms2g
+#     volumes:
+#       - .m2:/root/.m2
+#       - ./productservice:/repo
+#     working_dir: /repo
+#     entrypoint: mvn -B
+#     command: clean install -DskipTests
 
   # web-db:
   #   image: mysql:5.6
