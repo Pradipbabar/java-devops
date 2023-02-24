@@ -1,7 +1,8 @@
 name: coupon-build
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ git-action ]
 
 jobs:
   build:
