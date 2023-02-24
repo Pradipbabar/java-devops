@@ -1,27 +1,26 @@
-# name: product build
+name: product build
 
-# on:
-#   push:
-#     branches: [ git-action ]
+on:
+  workflow_dispatch:
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-#     - name: Set up JDK
-#       uses: actions/setup-java@v1
-#       with:
-#         java-version: 11
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
 
-#     - name: Build with Maven
-#       run: mvn -f productservice/pom.xml clean install -DskipTests 
+    - name: Build with Maven
+      run: mvn -f productservice/pom.xml clean install -DskipTests 
 
-#     - name: Store JAR
-#       uses: actions/upload-artifact@v2
-#       with:
-#         name: myapp
-#         path: productservice/target/productservice-0.0.1-SNAPSHOT.jar
+    - name: Store JAR
+      uses: actions/upload-artifact@v2
+      with:
+        name: myapp
+        path: productservice/target/productservice-0.0.1-SNAPSHOT.jar
