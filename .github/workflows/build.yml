@@ -24,6 +24,6 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker-compose down
+        docker-compose down --rmi all
         docker-compose build
         docker-compose push
