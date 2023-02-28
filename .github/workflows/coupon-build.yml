@@ -25,4 +25,21 @@ jobs:
       with:
         name: couponservice-0.0.1-SNAPSHOT.jar
         path: /home/runner/.m2/repository/com/ideas/springcloud/couponservice/0.0.1-SNAPSHOT/couponservice-0.0.1-SNAPSHOT.jar
+    - name: Clone Repository
+      uses: actions/checkout@v2
+      with:
+          repository: Pradipbabar/java-devops
+          token: ${{ secrets.PAT }}
+
+    - name: Move Jar to Repository
+      run: mv /home/runner/.m2/repository/com/ideas/springcloud/couponservice/0.0.1-SNAPSHOT/couponservice-0.0.1-SNAPSHOT.jar couponservice/jar-file/
+
+    - name: Commit and Push Changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+          commit_message: "Add my-app.jar"
+          commit_user_name: "Pradip"
+          commit_user_email: "actions@github.com"
+          branch: git-action
+          pull_branch: false   
         
