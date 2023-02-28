@@ -1,8 +1,7 @@
 name: coupon-build
 
 on:
-  push:
-    branches: [ git-action ]
+ workflow_dispatch:
 
 jobs:
   build:
@@ -40,6 +39,6 @@ jobs:
           commit_message: "upload-coupon-app"
           commit_user_name: "Pradip"
           commit_user_email: "actions@github.com"
-          branch: main
+          branch: github-action
           pull_branch: false
         
