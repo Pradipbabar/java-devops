@@ -18,7 +18,7 @@ jobs:
         java-version: 11
       
     - name: Build with Maven
-      run: mvn -f couponservice/pom.xml clean package -DskipTests
+      run: mvn -f couponservice/pom.xml clean package install -DskipTests
 
     - name: Create Release
       id: create_release
