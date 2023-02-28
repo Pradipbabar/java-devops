@@ -40,6 +40,6 @@ jobs:
           commit_message: "Add my-app.jar"
           commit_user_name: "Pradip"
           commit_user_email: "actions@github.com"
-          branch: rds
+          branch: dockerhub
           pull_branch: false   
         
