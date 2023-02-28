@@ -21,7 +21,9 @@ jobs:
       with:
         username: ${{ env.DOCKER_USERNAME }}
         password: ${{ env.DOCKER_PASSWORD }}
-
+        
+    - name: Delete Docker image cache
+      run: rm -rf /tmp/_github_home/docker/
     - name: Build and push Docker image
       run: |
         docker-compose down --rmi all
