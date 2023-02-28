@@ -21,7 +21,7 @@ jobs:
       run: rm -rf couponservice/target/
       
     - name: Build with Maven
-      run: mvn -f couponservice/pom.xml clean install -DskipTests 
+      run: mvn -f couponservice/pom.xml clean package
 
     - name: Store JAR
       uses: actions/upload-artifact@v2
