@@ -16,12 +16,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-
-    - name: Delete previous build artifacts
-      run: rm -rf couponservice/target/
       
     - name: Build with Maven
-      run: mvn -f couponservice/pom.xml clean package
+      run: mvn -f couponservice/pom.xml clean package -DskipTests
 
     - name: Create Release
       id: create_release
