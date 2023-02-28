@@ -28,6 +28,7 @@ jobs:
       with:
         tag_name: v1.0.0
         release_name: Release v1.0.0
+        body: This is the first release of my project.
         draft: false
         prerelease: false
         
