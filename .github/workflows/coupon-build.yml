@@ -41,5 +41,5 @@ jobs:
           commit_user_name: "Pradip"
           commit_user_email: "actions@github.com"
           branch: main
-          pull_branch: true   
+          pull_branch: false
         
