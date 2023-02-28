@@ -23,8 +23,30 @@ jobs:
     - name: Build with Maven
       run: mvn -f couponservice/pom.xml clean package
 
-    - name: Store JAR
-      uses: actions/upload-artifact@v2
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: myapp
-        path: couponservice/target/couponservice-0.0.1-SNAPSHOT.jar
+        tag_name: v1.0.0
+        release_name: Release v1.0.0
+        body: This is the first release of my project.
+        draft: false
+        prerelease: false
+        
+    - name: Upload JAR
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: myapp.jar
+        path: target/myapp.jar
+        
+    - name: Attach JAR to Release
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: target/myapp.jar
+        asset_name: myapp.jar
+        asset_content_type: application/java-archive
