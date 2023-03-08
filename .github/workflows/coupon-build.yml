@@ -1,9 +1,6 @@
 name: coupon-build
 
-on:
-  workflow_run:
-    workflows: ["product-build"]
-    types: [completed]
+on: workflow_dispatch 
 jobs:
   build:
     runs-on: ubuntu-latest
