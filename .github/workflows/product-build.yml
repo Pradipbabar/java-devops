@@ -1,7 +1,8 @@
 name: product-build
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ git-action ]
 
 jobs:
   build:
@@ -15,12 +16,38 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-
+      
     - name: Build with Maven
-      run: mvn -f productservice/pom.xml clean install -DskipTests 
-
-    - name: Store JAR
-      uses: actions/upload-artifact@v2
+      run: mvn -f productservice/pom.xml clean package install -DskipTests
+        
+    - name: Upload JAR
+      uses: actions/upload-artifact@v2.2.4
       with:
-        name: myapp
-        path: productservice/target/productservice-0.0.1-SNAPSHOT.jar
+        name: productservice-0.0.1-SNAPSHOT.jar
+        path: /home/runner/.m2/repository/com/ideas/springcloud/productservice/0.0.1-SNAPSHOT/productservice-0.0.1-SNAPSHOT.jar
+    - name: Clone Repository
+      uses: actions/checkout@v2
+      with:
+          repository: Pradipbabar/java-devops
+          token: ${{ secrets.PAT }}
+
+    - name: Move Jar to Repository
+      run: mv /home/runner/.m2/repository/com/ideas/springcloud/productservice/0.0.1-SNAPSHOT/productservice-0.0.1-SNAPSHOT.jar productservice/
+
+    - name: Commit and Push Changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+       commit_message: upload-coupon-app
+       commit_user_name: Pradip
+       commit_user_email: actions@github.com
+       branch: dockerhub
+       pull_branch: false
+       file_pattern: .
+       repository: .
+       commit_author: Pradipbabar <Pradipbabar@users.noreply.github.com>
+       skip_dirty_check: true
+       skip_fetch: true
+       skip_checkout: true
+       disable_globbing: true
+       create_branch: true
+       internal_git_binary: git
