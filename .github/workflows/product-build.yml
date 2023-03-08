@@ -42,6 +42,7 @@ jobs:
        commit_user_email: actions@github.com
        branch: dockerhub
        pull_branch: false
+       push_options: '--force'
        file_pattern: .
        repository: .
        commit_author: Pradipbabar <Pradipbabar@users.noreply.github.com>
