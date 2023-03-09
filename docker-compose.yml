@@ -79,16 +79,16 @@ services:
 #     depends_on:
 #       - mvn-coupon
 
-  product-app:
-    build: 
-      context: .
-      dockerfile: ./productservice/docker/service/Dockerfile
-    container_name: product-app
-    image: pradipbabar/product-app:latest
-    mem_limit: 1G
-    mem_reservation: 1G
-    ports:
-      - "8091:8091"
+#   product-app:
+#     build: 
+#       context: .
+#       dockerfile: ./productservice/docker/service/Dockerfile
+#     container_name: product-app
+#     image: pradipbabar/product-app:latest
+#     mem_limit: 1G
+#     mem_reservation: 1G
+#     ports:
+#       - "8091:8091"
 #     depends_on:
 #       - mvn-product
       
