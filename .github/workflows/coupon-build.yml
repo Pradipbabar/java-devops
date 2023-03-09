@@ -37,7 +37,7 @@ jobs:
        commit_message: upload-coupon-app
        commit_user_name: Pradip
        commit_user_email: actions@github.com
-       branch: dockerhub
+       branch: main
        pull_branch: false
        push_options: '--force'
        file_pattern: .
