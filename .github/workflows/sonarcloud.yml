@@ -7,31 +7,45 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: Build and analyze
+    name: Build and analyze two applications
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        application1:
+          name: Application 1
+          build-script: mvn -f couponservice/pom.xml clean install -DskipTests=true
+          sonar-project-key: app1-key
+          sonar-project-name: Application 1
+          sonar-project-version: "1.0"
+        application2:
+          name: Application 2
+          build-script: mvn -f productservice/pom.xml clean install -DskipTests=true
+          sonar-project-key: app1-key
+          sonar-project-name: Application 1
+          sonar-project-version: "1.0"
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/checkout@v2
       - name: Set up JDK 11
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v1
         with:
           java-version: 11
-          distribution: 'zulu' # Alternative distribution options are available.
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Java-DevOpsHub_java-devops
+        run: |
+          cd ${{ matrix.application1 ? 'application1' : 'application2' }}
+          ${{ matrix.build-script }}
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ matrix.sonar-project-key }} -Dsonar.projectName=${{ matrix.sonar-project-name }} -Dsonar.projectVersion=${{ matrix.sonar-project-version }} -Dsonar.sources=.
+          # Repeat the command for the second application with the correct project key, name, and version
