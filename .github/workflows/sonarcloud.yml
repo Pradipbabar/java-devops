@@ -45,7 +45,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd couponservice
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Java-DevOpsHub_java-devops-coupon-app -Dsonar.branch.name=main -DskipTests
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Java-DevOpsHub_java-devops -DskipTests
 
       - name: Build and analyze product-app
         env:
@@ -53,4 +53,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd productservice
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Java-DevOpsHub_java-devops-product-app -Dsonar.branch.name=main -DskipTests
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Java-DevOpsHub_java-devops -DskipTests
