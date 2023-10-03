@@ -66,7 +66,7 @@
 ## Get Started with the Project 
 1. Clone the Git Repository in WSL at your "repos" location
 2. Start the Docker service
-3. 
+3. run `docker-compose up -d`
 
 ## Creating a springboot project
 1. Create a new Spring Project with Maven
@@ -76,23 +76,27 @@
     - Spring web 
 
 ## Building the projects in Maven containers - 
-1. To build the productservice app, execute [docker-compose run --rm mvn-product clean package -DskipTests]
-2. To build the couponservice app, execute [docker-compose run --rm mvn-coupon clean package -DskipTests]
+1. To build the productservice app, execute [`docker-compose run --rm mvn-product clean package -DskipTests`]
+2. To build the couponservice app, execute [`docker-compose run --rm mvn-coupon clean package -DskipTests`]
 
 
 ## Postman calls to create Coupon & Products
 - Create a coupon 
+```
 {
     "code":"XMAS",
     "discount":25,
     "expDate":"26/12/2022"
 }
+```
 
 - Create a product 
+```
 {
     "name":"X-mas Tree",
     "description": "A must have in your Xmas decoration",
     "price": 75,
     "couponCode": "XMAS"
 }
+```
 
